@@ -40,13 +40,13 @@
 	<script type="text/javascript" canvas="canvas">
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
-
+      
 			// coloring page
-			var mandala = {
+        var mandala = {
 				item: null,
 				lastClicked: null,
 				filePath: '/static/coloring/images/mandala-freepik.svg'
-			};	
+			};
 
 			// color palette
 			var cp = {
@@ -58,22 +58,46 @@
 			// your rectangle gradient interaction goes in this function
 			// you may also add code outside of the function (e.g., global variables)
 			function myGradientInteraction(){
-				var tool = new paper.Tool();
 
+        var tool = new paper.Tool();
+        
+        var rectangle = new paper.Rectangle(160, 258, 400, 200);
+        var path = new paper.Path.Rectangle(rectangle);
+        path.fillColor = 'red';
+        
+        var orig; 
+        var dest; 
+        
 				tool.onMouseDown = function (event) {
-
+          orig = event.point;
 				}
-
+        
 				tool.onMouseUp = function (event) {
-					
-				}
+          // Set rectangle fillColor to gradient
+          dest = event.point;
+
+          // Stops attr == last two colors selected from color palatte (in cp.history)
+          var selectColors = cp.history.slice(Math.max(cp.history.length - 2));
+          
+          // Set origin == mouse-down location; destination == mouse-up location
+          path.fillColor = {
+            gradient: {
+              stops: selectColors,
+              radial: false
+            },
+            origin: orig,
+            destination: dest
+          };
+				} 
 			}
 
 			// your custom interaction goes here!
+
 			// you may replace everything
 			function myCustomInteraction() {
+        
 				var tool = new paper.Tool();
-
+  
 				tool.onMouseDown = function (event) {
 				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
 				    if (hit) {
@@ -126,6 +150,7 @@
 					
 				}); 
 			}
+      
 
 			// To see your myGradientInteraction version visit: 
 			// http://<your url>:8000/coloring/?type=gradient
