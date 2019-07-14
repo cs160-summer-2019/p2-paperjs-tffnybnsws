@@ -12,16 +12,16 @@ body {
 }
 
 h4 {
-  font-family: Mukta;
-  font-size: 15px;
+  font-family: Apercu Regular;
+  font-size: 13px;
   letter-spacing: 1px;
   margin-bottom: 0px;
   margin-top: 0px
 }
 
 p {
-  font-family: Mukta;
-  font-size: 15px;
+  font-family: Apercu Regular;
+  font-size: 12px;
   letter-spacing: 1px;
   margin-bottom: 5px;
   margin-top: 0px
@@ -71,7 +71,7 @@ p {
   padding: 5px 16px;
   background-color: white;
   cursor: pointer;
-  font: 'Mukta';
+  font-family: Apercu Regular;
   font-size: 15px;
 }
 

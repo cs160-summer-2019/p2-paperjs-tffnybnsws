@@ -28,7 +28,7 @@ body {
 }
 
 .palette-overlay a:hover, .palette-overlay a:focus {
-  color: #f1f1f1;
+  color: black;
 }
 
 .palette-overlay .closebtn {
@@ -96,8 +96,8 @@ body {
 
 .archive-toggle-btn {
   position: absolute;
-  left: 0;
-  bottom: 5px;
+  right: 0px;
+  top: 0px;
   background-color: white;
   border: none;
   color: black;
@@ -114,7 +114,7 @@ body {
 /* USER SETTINGS */
 
 .settings-overlay {
-  font-family: DM Serif Display;
+  font-family: 'Apercu Regular';
   height: 100%;
   width: 0;
   position: fixed;
@@ -137,7 +137,7 @@ body {
 }
 
 .settings-overlay a:hover, .settings-overlay a:focus {
-  color: #f1f1f1;
+  color: black;
 }
 
 .settings-overlay-content {
@@ -241,7 +241,7 @@ body {
       top: 20px;
       width: 125px;
 			height: 600px;
-			background-color: #f1f1f1;
+			background-color: white;
 			display: flex;
 			flex-wrap: wrap;
 			position: absolute;
