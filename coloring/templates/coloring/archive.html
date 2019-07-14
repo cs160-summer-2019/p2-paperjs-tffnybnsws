@@ -1,0 +1,140 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<title>Archive</title>
+  	<link rel="stylesheet" type="text/css" href="{% static 'css/archive-style.css' %}"/>
+    <link href='https://fonts.googleapis.com/css?family=Mukta|Noto Serif' rel='stylesheet'>
+
+
+</head>
+<body>	
+    <div id="archive-options">
+  <button class="archive-btn active" onclick="filterSelection('in-progress')"> In Progress</button>
+  <button class="archive-btn" onclick="filterSelection('completed')"> Completed</button>
+  <button class="archive-btn" onclick="filterSelection('for-later')"> For Later</button>
+</div>
+    <div class="archive-menu-spacing">
+<!-- ARCHIVE PORTFOLIO GALLERY GRID -->
+<div class="archive-row">
+  <div class="archive-column in-progress">
+    <div class="archive-content">
+      <img src="https://i.postimg.cc/Cxq36XQH/air-thumb.jpg" alt="" style="width:40%">
+      <h4>Moon Safari</h4>
+      <p>Air</p>
+    </div>
+  </div>
+  <div class="archive-column in-progress">
+    <div class="archive-content">
+    <img src="https://i.postimg.cc/PqngGKGG/aphex-twin-thumb.jpg" alt="Lights" style="width:40%">
+      <h4>Richard D. James</h4>
+      <p>Aphex Twin</p>
+    </div>
+  </div>
+  <div class="archive-column in-progress">
+    <div class="archive-content">
+    <img src="https://i.postimg.cc/Jh39RJms/beach-boys-thumb.jpg" alt="" style="width:40%">
+      <h4>Smile</h4>
+      <p>The Beach Boys</p>
+    </div>
+  </div>
+  
+  <div class="archive-column completed">
+    <div class="archive-content">
+      <img src="https://i.postimg.cc/KzfSDTs6/dan-deacon-thumb.jpg" alt="" style="width:40%">
+      <h4>Glass Riffer</h4>
+      <p>Dan Deacon</p>
+    </div>
+  </div>
+  <div class="archive-column completed">
+    <div class="archive-content">
+    <img src="https://i.postimg.cc/8cC8KC2j/kraftwerk-thumb.jpg" alt="" style="width:40%">
+      <h4>Computer World</h4>
+      <p>Kraftwerk</p>
+    </div>
+  </div>
+  <div class="archive-column completed">
+    <div class="archive-content">
+    <img src="https://i.postimg.cc/90g6vh21/prince-thumb.jpg" alt="" style="width:40%">
+      <h4>1999</h4>
+      <p>Prince</p>
+    </div>
+  </div>
+
+  <div class="archive-column for-later">
+    <div class="archive-content">
+      <img src="https://i.postimg.cc/02bR7bG4/radiohead-kid-A-thumb.jpg" alt="" style="width:40%">
+      <h4>Kid A</h4>
+      <p>Radiohead</p>
+    </div>
+  </div>
+  <div class="archive-column for-later">
+    <div class="archive-content">
+    <img src="https://i.postimg.cc/HLGgYdyh/the-beatles-thumb.jpg" alt="" style="width:40%">
+      <h4>The White Album</h4>
+      <p>The Beatles</p>
+    </div>
+  </div>
+  <div class="archive-column for-later">
+    <div class="archive-content">
+    <img src="https://i.postimg.cc/ydsCRjnh/tribe-called-quest-thumb.jpg" alt="" style="width:40%">
+      <h4>The Low End Theory</h4>
+      <p>A Tribe Called Quest</p>
+    </div>
+  </div>
+<!-- END GRID -->
+</div>
+  </div>
+<!-- END ARCHIVE MAIN -->
+
+<script>
+
+filterSelection("in-progress")
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("archive-column");
+  if (c == "all") c = "";
+  for (i = 0; i < x.length; i++) {
+    archRemoveClass(x[i], "archive-show");
+    if (x[i].className.indexOf(c) > -1) archAddClass(x[i], "archive-show");
+  }
+}
+
+function archAddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+  }
+}
+
+function archRemoveClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);     
+    }
+  }
+  element.className = arr1.join(" ");
+}
+
+
+// Add active class to the current button (highlight it)
+var btnContainer = document.getElementById("archive-options");
+var btns = btnContainer.getElementsByClassName("archive-btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function(){
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+
+</script>
+  </body>
+</html>

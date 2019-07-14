@@ -1,0 +1,93 @@
+body {
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.main {
+  max-width: 500px;
+  margin: auto;
+}
+
+h4 {
+  font-family: Mukta;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin-bottom: 0px;
+  margin-top: 0px
+}
+
+p {
+  font-family: Mukta;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+  margin-top: 0px
+}
+
+.archive-row {
+  margin: 0px -10px;
+}
+
+/* Add padding BETWEEN each archive-column */
+.archive-row,
+.archive-row > .archive-column {
+  padding: 2px;
+}
+
+/* Create three equal archive-columns that floats next to each other */
+.archive-column {
+  float: left;
+  width: 25%;
+  display: none; /* Hide all elements by default */
+}
+
+/* Clear floats after rows */ 
+.archive-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Content */
+.archive-content {
+  background-color: white;
+  padding: 5px;
+  padding: 10px;
+  text-align: left;
+}
+
+/* The "show" class is added to the filtered elements */
+.archive-show {
+  display: block;
+}
+
+/* Style the buttons */
+.archive-btn {
+  border: none;
+  outline: none;
+  padding: 5px 16px;
+  background-color: white;
+  cursor: pointer;
+  font: 'Mukta';
+  font-size: 15px;
+}
+
+.archive-btn:hover {
+  background-color: white;
+  color: black;
+  border-bottom: 2px solid blue;
+}
+
+.archive-btn.active {
+  background-color: white;
+  color: black;
+  border-bottom: 2px solid blue;
+}
+
+.archive-menu-spacing{
+  padding-top: 30px;
+  padding-bottom: 10px;
+    }

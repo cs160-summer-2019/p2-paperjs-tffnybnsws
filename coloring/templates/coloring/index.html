@@ -5,147 +5,115 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   	<title>P3 Coloring</title>
-
 	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
-
-	<style type="text/css">
-		#color-palette {
-			width: 300px;
-			background-color: #f1f1f1;
-			display: flex;
-			flex-wrap: wrap;
-			position: absolute;
-			top: 0;
-		}
-
-		.swatch {
-			width: 24px;
-			height: 24px;
-			-moz-border-radius: 12px;
-			-webkit-border-radius: 12px;
-			border-radius: 12px;
-			margin: 3px;
-		}
-
-		#myCanvas {
-			padding-left: 0;
-		    padding-right: 0;
-		    margin-left: auto;
-		    margin-right: auto;
-		    display: block;
-		}
-    
-    button{
-      margin-left: 1em;
-      text-transform: uppercase;
-      padding: 1em;
-      background: transparent;
-      border: 1px solid;
-      outline: none;
-        align-items: center;
-  justify-content: center;
-    }
-   
-	</style>
+  <link href='https://fonts.googleapis.com/css?family=DM Serif Display' rel='stylesheet'>
+  <link rel="stylesheet" href="https://use.typekit.net/udu0hib.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 
 <script type="text/javascript" canvas="canvas">
+  var openPalette;
+  var closePalette;
+  var openArchive;
+  var closeArchive;
+  var openSettings;
+  var closeSettings;
+  var openMusic;
+  var closeMusic;
+  
+
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
-            
-			// coloring page
-        var mandala = {
+
+			// Colorable album cover
+        var album = {
 				item: null,
 				lastClicked: null,
 				filePath: '/static/coloring/images/debussy_vector.svg'
 			};
 
-			// color palette
+			// Color palette
 			var cp = {
 				history: ["#000000"], // black selected by default
 				options: [],
 				$container: $('#color-palette')
 			}
-
-			// your rectangle gradient interaction goes in this function
-			// you may also add code outside of the function (e.g., global variables)
       
-      function myGradientInteraction(){
-        var tool = new paper.Tool();
-        
-        var rectangle = new paper.Rectangle(160, 258, 400, 200);
-        var path = new paper.Path.Rectangle(rectangle);
-        path.fillColor = 'red';
-        
-        var orig; 
-        var dest; 
-        
-				tool.onMouseDown = function (event) {
-          orig = event.point;
-				}
-        
-				tool.onMouseUp = function (event) {
-          // Set rectangle fillColor to gradient
-          dest = event.point;
-          // Stops attr == last two colors selected from color palatte (in cp.history)
-          var selectColors = cp.history.slice(Math.max(cp.history.length - 2));
-          
-          // Set origin == mouse-down location; destination == mouse-up location
-          path.fillColor = {
-            gradient: {
-              stops: selectColors,
-              radial: false
-            },
-            origin: orig,
-            destination: dest
-          };
-				} 
-			} 
+      // Open-close feature for toggle menus 
+      openPalette = function() {
+        document.getElementById("palette").style.width = "15%";
+      }
 
-			// your custom interaction goes here!
+      closePalette = function() {
+        document.getElementById("palette").style.width = "0%";
+      }
+      
+      openArchive = function() {
+        document.getElementById("archive").style.height = "32%";
+      }
 
-			// you may replace everything
+      closeArchive = function() {
+        document.getElementById("archive").style.height = "0%";
+      }
+      
+      openSettings = function() {
+        document.getElementById("settings").style.width = "25%";
+      }
+
+      closeSettings = function() {
+        document.getElementById("settings").style.width = "0%";
+      }
+
+      openMusic = function() {
+        document.getElementById("music").style.height = "50%";
+      }
+
+      closeMusic = function() {
+        document.getElementById("music").style.height = "0%";
+      }
+      
+
+			// Coloring tool 
       var path;
 
       function myCustomInteraction() {
-        
+
 				var tool = new paper.Tool();
-        
+
         tool.onMouseDown = function(event) {
           path = new paper.Path();
           path.strokeColor = cp.history[cp.history.length - 1];
           path.strokeWidth = 7;
           path.add(event.point);
         }
-        
+
         tool.onMouseDrag = function(event) {
           path.add(event.point);
         }
-  
-				/* tool.onMouseDown = function (event) {
-				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
-				    if (hit) {
-				        hit.item.fillColor = cp.history[cp.history.length - 1];
-				    }
-				} */
 			}
 
-			// create a color palette with the given colors
+      function undo() {
+        path.remove();
+      }
+
+			// Create a color palette with the given colors
 			function createColorPalette(colors){
 
-				// create a swatch for each color
+				// Create a swatch for each color
 				for (var i = colors.length - 1; i >= 0; i--) {
 					var $swatch = $("<div>").css("background-color", colors[i])
 									   .addClass("swatch");
 					$swatch.click(function(){
-						// add color to the color palette history
+						// Add color to the color palette history
 					  	cp.history.push($(this).css("background-color"));
 					});
 					cp.$container.append($swatch);
 				}
 			}
 
-			// loads a set of colors from a json to create a color palette
+			// Loads a set of colors from a JSON to create a color palette
 			function getColorsCreatePalette(){
 				cp.$container.html(" ");
 				$.getJSON('/static/coloring/vendors/material/material-colors.json', function(colors){
@@ -156,46 +124,94 @@
 					createColorPalette(cp.options);
 				});
 			}
-			
+
+
 			function init(custom){
 				paper.setup(canvas);
 				getColorsCreatePalette();
 
-				paper.project.importSVG(mandala.filePath, function(item) { 
-					mandala.item = item._children["design-freepik"];
-				    paper.project.insertLayer(0,mandala.item);
+				paper.project.importSVG(album.filePath, function(item) {
+					album.item = item._children["design-freepik"];
+				    paper.project.insertLayer(0,album.item);
 
 				    if (custom) {
-				    	myCustomInteraction();	
+				    	myCustomInteraction();
 				    } else {
 				    	myGradientInteraction();
-				    }		
+				    }
 
-				}); 
+				});
 			}
-      
 
-			// To see your myGradientInteraction version visit: 
-			// http://<your url>:8000/coloring/?type=gradient
-			// To see your myCustomInteraction version visit: 
-			// http://<your url>:8000/coloring/
 			var url = window.location.href;
 			if (url.indexOf("gradient") > -1) {
 				init(false);
 			} else {
 				init(true);
-			} 
-      
-		}
-	</script>
-</head>
-<body>	
-	<canvas id="myCanvas" width="750px" height="750px"></canvas>
-	<div id="color-palette"></div>
-    <!--<button onclick="clearDrawing()">
-    clear
-  </button>-->
-  <div class="spotify-embed"><iframe src="https://open.spotify.com/embed/album/1O0zuT2lYKReG237V89YV5" width="750" height="80" frameborder="0" allowtransparency="true"></iframe></div>
+			}
 
-</body>
+		}
+    
+	</script>
+  <script>
+$(document).ready(function(){
+   $('#archive-load').load("http://p2-paperjs-tffnybnsws-tboonsawas248165.codeanyapp.com/coloring/archive/");
+});
+</script>
+</head>
+<body>
+	<canvas id="myCanvas" width="750px" height="750px"></canvas>
+  
+  <!-- ARCHIVE -->
+  <div id="archive" class="archive-overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeArchive()">&times;</a>
+  <div class="archive-overlay-content">
+    <div id="archive-load"></div>
+    </div>
+</div>
+<!-- Music player icon -->
+<button class="archive-toggle-btn" onclick="openArchive()"><i class="material-icons" style="font-size:30px;">collections</i></button>
+
+<!-- TOOL PALETTE -->
+  <div id="palette" class="palette-overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closePalette()"><i class="material-icons">arrow_forward_ios</i></a>
+  <div class="palette-overlay-content">
+	<div id="color-palette"></div>
+  </div>
+</div>
+<!-- Right toggle arrow -->
+<button class="palette-toggle-btn" onclick="openPalette()"><i class="material-icons" style="font-size:20px;">arrow_back_ios</i></button>
+
+  
+  <!-- USER SETTINGS -->
+  <div id="settings" class="settings-overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeSettings()"><i class="material-icons">arrow_back_ios</i></a>
+  <div class="settings-overlay-content">
+<i class="material-icons" style="font-size:80px;">account_circle</i>
+    <a href="#">Profile</a>
+    <a href="#">Account</a>
+    <a href="#">Social</a>
+    <a href="#">Music Quality</a>
+    <a href="#">Notifications</a>
+    <div class="settings-menu-spacing">
+  <button class="log-out">
+    log out
+  </button>
+  </div>
+  </div>
+</div>
+<!-- Left toggle arrow -->
+<button class="settings-toggle-btn" onclick="openSettings()"><i class="material-icons" style="font-size:20px;">arrow_forward_ios</i></button>
+
+<!-- MUSIC PLAYER -->
+<div id="music" class="music-overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeMusic()">&times;</a>
+  <div class="music-overlay-content">
+    <iframe src="https://open.spotify.com/embed/album/1O0zuT2lYKReG237V89YV5" width="100%" height="750" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></div>
+</div>
+<!-- Music player icon -->
+<button class="music-toggle-btn" onclick="openMusic()"><i class="fa fa-spotify"></i></button>
+
+  
+  </body>
 </html>
