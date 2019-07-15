@@ -15,15 +15,18 @@
   <link rel="stylesheet" type="text/css" href="{% static 'fonts/style.css' %}"/>
 
 <script type="text/javascript" canvas="canvas">
-  var openPalette;
-  var closePalette;
+  var openSearch;
+  var closeSearch;
   var openArchive;
   var closeArchive;
-  var openSettings;
-  var closeSettings;
+  var openPalette;
+  var closePalette;
   var openMusic;
   var closeMusic;
-  
+  var openSettings;
+  var closeSettings;
+  var openShare;
+  var closeShare;
 
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
@@ -43,12 +46,12 @@
 			}
       
       // Open-close feature for toggle menus 
-      openPalette = function() {
-        document.getElementById("palette").style.width = "15%";
+      openSearch = function() {
+        document.getElementById("search").style.height = "100%";
       }
 
-      closePalette = function() {
-        document.getElementById("palette").style.width = "0%";
+      closeSearch = function() {
+        document.getElementById("search").style.height = "0%";
       }
       
       openArchive = function() {
@@ -59,14 +62,14 @@
         document.getElementById("archive").style.height = "0%";
       }
       
-      openSettings = function() {
-        document.getElementById("settings").style.width = "25%";
+      openPalette = function() {
+        document.getElementById("palette").style.width = "15%";
       }
 
-      closeSettings = function() {
-        document.getElementById("settings").style.width = "0%";
+      closePalette = function() {
+        document.getElementById("palette").style.width = "0%";
       }
-
+      
       openMusic = function() {
         document.getElementById("music").style.height = "50%";
       }
@@ -75,6 +78,22 @@
         document.getElementById("music").style.height = "0%";
       }
       
+      openSettings = function() {
+        document.getElementById("settings").style.width = "20%";
+      }
+
+      closeSettings = function() {
+        document.getElementById("settings").style.width = "0%";
+      }
+      
+      openShare = function() {
+        document.getElementById("share").style.width = "20%";
+      }
+
+      closeShare = function() {
+        document.getElementById("share").style.width = "0%";
+      }
+
 
 			// Coloring tool 
       var path;
@@ -126,7 +145,6 @@
 				});
 			}
 
-
 			function init(custom){
 				paper.setup(canvas);
 				getColorsCreatePalette();
@@ -159,10 +177,26 @@ $(document).ready(function(){
    $('#archive-load').load("http://p2-paperjs-tffnybnsws-tboonsawas248165.codeanyapp.com/coloring/archive/");
 });
 </script>
+      <script>
+$(document).ready(function(){
+   $('#search-load').load("http://p2-paperjs-tffnybnsws-tboonsawas248165.codeanyapp.com/coloring/search/");
+});
+</script>
 </head>
+  
 <body>
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
   
+  <!-- SEARCH -->
+  <div id="search" class="search-overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeSearch()">&times;</a>
+  <div class="search-overlay-content">
+    <div id="search-load"></div>
+    </div>
+</div>
+<!-- Music player icon -->
+<button class="search-toggle-btn" onclick="openSearch()"><img src="https://img.icons8.com/small/64/000000/search.png" alt="" width="30" height="30"></button>
+
   <!-- ARCHIVE -->
   <div id="archive" class="archive-overlay">
   <a href="javascript:void(0)" class="closebtn" onclick="closeArchive()">&times;</a>
@@ -183,6 +217,15 @@ $(document).ready(function(){
 <!-- Right toggle arrow -->
 <button class="palette-toggle-btn" onclick="openPalette()"><i class="material-icons" style="font-size:20px;">arrow_back_ios</i></button>
 
+<!-- MUSIC PLAYER -->
+<div id="music" class="music-overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeMusic()">&times;</a>
+  <div class="music-overlay-content">
+    <iframe src="https://open.spotify.com/embed/album/1O0zuT2lYKReG237V89YV5" width="100%" height="750" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></div>
+</div>
+<!-- Music player icon -->
+<button class="music-toggle-btn" onclick="openMusic()"><i class="fa fa-spotify"></i></button>
+
   
   <!-- USER SETTINGS -->
   <div id="settings" class="settings-overlay">
@@ -195,24 +238,47 @@ $(document).ready(function(){
     <a href="#">Music Quality</a>
     <a href="#">Notifications</a>
     <div class="settings-menu-spacing">
-  <button class="log-out">
+  <button class="settings-log-out">
     log out
   </button>
   </div>
   </div>
 </div>
-<!-- Left toggle arrow -->
-<button class="settings-toggle-btn" onclick="openSettings()"><i class="material-icons" style="font-size:20px;">arrow_forward_ios</i></button>
+<!-- Toggle icon -->
+<button class="settings-toggle-btn" onclick="openSettings()"><i class="material-icons">menu</i></button>
 
-<!-- MUSIC PLAYER -->
-<div id="music" class="music-overlay">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeMusic()">&times;</a>
-  <div class="music-overlay-content">
-    <iframe src="https://open.spotify.com/embed/album/1O0zuT2lYKReG237V89YV5" width="100%" height="750" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></div>
+  <!-- SHARE & EXPORT -->
+  <div id="share" class="share-overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeShare()"><i class="material-icons">arrow_back_ios</i></a>
+  <div class="share-overlay-content">
+      <button class="share-log-out">
+    save to collection
+    </button>
+      <button class="share-log-out">
+    print
+  </button>
+    <div class="social">
+      <i class="fa fa-envelope-open-text"></i>
+      <i class="fa fa-pinterest"></i>
+      <i class="fa fa-instagram"></i>
+      <i class="fa fa-facebook"></i>
+      <i class="fa fa-twitter"></i>
+      <i class="fa fa-sms"></i>
+    </div>
+    <!--<a href="#">Profile</a>
+    <a href="#">Account</a>
+    <a href="#">Social</a>
+    <a href="#">Music Quality</a>
+    <a href="#">Notifications</a>-->
+    <div class="share-menu-spacing">
+  <button class="share-log-out">
+    cancel
+  </button>
+  </div>
+  </div>
 </div>
-<!-- Music player icon -->
-<button class="music-toggle-btn" onclick="openMusic()"><i class="fa fa-spotify"></i></button>
-
+<!-- Toggle icon -->
+<button class="share-toggle-btn" onclick="openShare()"><i class="material-icons">arrow_forward_ios</i></button>
   
   </body>
 </html>

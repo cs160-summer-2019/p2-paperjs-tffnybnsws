@@ -60,6 +60,7 @@ input[type="submit"] {
   color:red;
   float: left;
   background: url(https://img.icons8.com/small/64/000000/search.png) center center no-repeat;
+  background-size: 40px;
   text-indent: -10000px;
   border: none;
   position: absolute;
