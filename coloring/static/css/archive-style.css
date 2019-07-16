@@ -38,7 +38,7 @@ p {
   padding: 2px;
 }
 
-/* Create three equal archive-columns that floats next to each other */
+/* Create eight equal archive-columns that floats next to each other */
 .archive-column {
   float: left;
   width: 12.5%;

@@ -1,16 +1,30 @@
 @import url({% static 'fonts/style.css' %});
 
 body {
-	background: white;
   font-family: Apercu Regular;
-	font-size: 15px;
+}
+
+h1 {
+  margin: 5px;
+  line-height: 0.7em;
+  text-align: left;
+}
+
+h4 {
+  margin: 0;
+  font-size: 13px;
+}
+
+p {
+  margin: 0;
+  font-size: 12px;
 }
 
 #wrap {
-  margin: 10px 30px;
+  margin: 5px 15px;
   display: inline-block;
   position: relative;
-  height: 60px;
+  height: 10px;
   float: left;
   padding: 0;
   position: relative;
@@ -18,7 +32,7 @@ body {
 
 #browse-wrap {
   position: relative;
-  top: 100px;
+  top: 75px;
   left: 10px;
 }
 
@@ -53,6 +67,7 @@ input[type="text"]:focus {
   border-bottom: 1px solid black;
   cursor: text;
 }
+
 input[type="submit"] {
   height: 67px;
   width: 63px;
@@ -76,18 +91,24 @@ input[type="submit"]:hover {
   opacity: 0.8;
 }
 
-div.gallery {
-  margin: 10px;
+* {
+  box-sizing: border-box;
+}
+
+.container {
+width: 1400px;
+}
+
+.column {
   float: left;
-  width: 140px;
-}
-
-div.gallery img {
-  width: 100%;
-  height: auto;
-}
-
-div.desc {
+  width: 12.5%;
   padding: 5px;
-  text-align: left;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+  padding-bottom: 5px;
 }
