@@ -32,12 +32,12 @@ p {
 
 #browse-wrap {
   position: relative;
-  top: 75px;
+  top: 65px;
   left: 10px;
 }
 
 input[type="text"] {
-  height: 60px;
+  height: 52px;
   font-size: 55px;
   display: inline-block;
   font-family: "Apercu Regular";
